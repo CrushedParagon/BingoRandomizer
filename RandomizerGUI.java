@@ -3,9 +3,8 @@ import javax.swing.*;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.awt.GridLayout;
-import java.awt.Font;
-import java.awt.Color;
 import java.awt.event.*;
+import java.awt.*;
 
 public class RandomizerGUI{
    private static int COLUMNS=3;
@@ -13,7 +12,8 @@ public class RandomizerGUI{
    private static int ELEMENTS=9;
    private static JTextField field1;
    private static JTextField field2;
-   private static JFrame frame;
+   private static JFrame frame2;
+   private static JPanel panel;
    
    public static int getRows(){
       return ROWS;
@@ -26,7 +26,7 @@ public class RandomizerGUI{
    public static void makeGUI(String[] selected){
       GridLayout layout=new GridLayout(ROWS,COLUMNS);
       JFrame frame=new JFrame("Bingo");
-      JPanel panel=new JPanel();
+      panel=new JPanel();
       
       panel.setLayout(layout);
       for(int i=0; i<ELEMENTS; i++){
@@ -43,12 +43,13 @@ public class RandomizerGUI{
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.setSize(720,720);
       frame.setVisible(true);
+      saveImage();
    }
    
    public static void rowColumnGUI(){
-      frame=new JFrame();
-      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      JPanel panel=(JPanel)frame.getContentPane();
+      frame2=new JFrame();
+      frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      JPanel panel=(JPanel)frame2.getContentPane();
       GridLayout layout=new GridLayout(1,5);
       panel.setLayout(layout);
       field1=new JTextField("");
@@ -69,7 +70,7 @@ public class RandomizerGUI{
          ROWS=rows;
          COLUMNS=columns;
          ELEMENTS=ROWS*COLUMNS;
-         frame.setVisible(false);
+         frame2.setVisible(false);
          Randomizer.Next();
       }
       
@@ -81,8 +82,26 @@ public class RandomizerGUI{
       panel.add(new JLabel("Columns"));
       panel.add(field2);
       panel.add(button);
-      frame.setSize(500,100);
-      frame.setVisible(true);
+      frame2.setSize(500,100);
+      frame2.setVisible(true);
+
+   }
+   
+   public static void saveImage(){
+      Dimension size = panel.getSize();
+      BufferedImage image = new BufferedImage(
+                    size.width, size.height 
+                              , BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2 = image.createGraphics();
+        panel.paint(g2);
+        try
+        {
+            ImageIO.write(image, "png", new File("Bingo.png"));
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
    }
    
       
