@@ -5,8 +5,13 @@ import java.io.File;
 import java.awt.GridLayout;
 import java.awt.event.*;
 import java.awt.*;
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+
 
 public class RandomizerGUI{
+   
    private static int COLUMNS=3;
    private static int ROWS=3;
    private static int ELEMENTS=9;
@@ -27,6 +32,10 @@ public class RandomizerGUI{
       GridLayout layout=new GridLayout(ROWS,COLUMNS);
       JFrame frame=new JFrame("Bingo");
       panel=new JPanel();
+      panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+      panel.getInputMap().put(KeyStroke.getKeyStroke("control S"),"Save");
+      panel.getActionMap().put("Save",new SaveAction("s"));
+      
       
       panel.setLayout(layout);
       for(int i=0; i<ELEMENTS; i++){
@@ -34,17 +43,16 @@ public class RandomizerGUI{
          area.setBackground(Color.lightGray);
          area.setHorizontalAlignment(JTextField.CENTER);
          area.setEditable(false);
-         double fontSize=1140.0/((double)selected[i].length()*(double)COLUMNS);
+         double fontSize=Math.max(1600.0/((double)selected[i].length()*(double)COLUMNS),9.0);
          area.setFont(new Font("Courier",Font.BOLD,(int)fontSize-1));
          panel.add(area);
       }
       
       frame.add(panel);
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      frame.setSize(720,720);
+      frame.setSize(1000,1000);
       frame.setVisible(true);
-      saveImage();
-   }
+         }
    
    public static void rowColumnGUI(){
       frame2=new JFrame();
