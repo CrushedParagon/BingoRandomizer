@@ -5,6 +5,10 @@ This is a java program that reads in the bingo.txt file and randomly selects fro
 
 You can save an image called "Bingo.png" by pressing ctrl+s while the window is up.
 
+
+If multiple bingo cards are made at once, they will automatically save (so you don't need to press ctrl+s 100 times for 100 cards)
+
+
 The format for the bingo.txt is that line one is an integer that says how many lines are below it (incorrect number causes the program to not launch).
 
 Every line below the number is taken as their own element.
