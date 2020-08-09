@@ -2,11 +2,13 @@ import javax.swing.AbstractAction;
 import java.awt.event.*;
 
 public class SaveAction extends AbstractAction{
-   public SaveAction(String s){
+   private int num;
+   public SaveAction(int i){
+      num=i;
    }
    public void actionPerformed(ActionEvent e){
       
-         RandomizerGUI.saveImage();
+         RandomizerGUI.saveImage(num);
       
    }
 }

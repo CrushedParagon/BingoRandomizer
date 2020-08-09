@@ -30,14 +30,14 @@ public class Randomizer{
    }
    
    
-   public static void Next(){
+   public static void Next(int sheets){
       COLUMNS=RandomizerGUI.getColumns();
       ROWS=RandomizerGUI.getRows();
       ELEMENTS=COLUMNS*ROWS;
-   
-      String[] selected=selectItems(random);
-      
-      RandomizerGUI.makeGUI(selected);
+      for(int i=0; i<sheets; i++){
+         String[] selected=selectItems(random);
+         RandomizerGUI.makeGUI(selected,i);
+      }
    }
    
    public static void readBingo(String filename) throws FileNotFoundException,IOException{
@@ -49,15 +49,20 @@ public class Randomizer{
          line=in.readLine().trim();
          random[i]=line;
       }
+      in.close();
    }
    
    public static String[] selectItems(String[] items){
       String[] toReturn=new String[ELEMENTS];
+      String[] duplicate=new String[items.length];
+      for(int i=0; i<items.length; i++){
+         duplicate[i]=items[i];
+      }
       for(int i=0; i<ELEMENTS; i++){
-         int random=(int)(Math.random()*(items.length-i));
-         toReturn[i]=items[random];
+         int random=(int)(Math.random()*(duplicate.length-i));
+         toReturn[i]=duplicate[random];
          for(int j=random; j<(items.length-i-1); j++){
-            items[j]=items[j+1];
+            duplicate[j]=duplicate[j+1];
          }
       }
       return toReturn;
