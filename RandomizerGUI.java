@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import javax.swing.text.*;
 
 
 public class RandomizerGUI{
@@ -30,6 +31,8 @@ public class RandomizerGUI{
    
    public static void makeGUI(String[] selected){
       GridLayout layout=new GridLayout(ROWS,COLUMNS);
+      layout.setHgap(5);
+      layout.setVgap(5);
       JFrame frame=new JFrame("Bingo");
       panel=new JPanel();
       panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
@@ -39,13 +42,16 @@ public class RandomizerGUI{
       
       panel.setLayout(layout);
       for(int i=0; i<ELEMENTS; i++){
-         JTextField area=new JTextField(selected[i]);
-         area.setBackground(Color.lightGray);
-         area.setHorizontalAlignment(JTextField.CENTER);
-         area.setEditable(false);
-         double fontSize=Math.max(1600.0/((double)selected[i].length()*(double)COLUMNS),9.0);
-         area.setFont(new Font("Courier",Font.BOLD,(int)fontSize-1));
-         panel.add(area);
+         JTextPane textPane=new JTextPane();
+         StyledDocument doc = textPane.getStyledDocument();
+         SimpleAttributeSet center = new SimpleAttributeSet();
+         StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+         doc.setParagraphAttributes(0, doc.getLength(), center, false);
+        //double fontSize=Math.max(1600.0/((double)selected[i].length()*(double)COLUMNS),9.0);
+         textPane.setFont(new Font("Courier",Font.BOLD,15));
+         textPane.setText(selected[i]);
+         textPane.setBackground(Color.lightGray);
+         panel.add(textPane);
       }
       
       frame.add(panel);
