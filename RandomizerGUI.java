@@ -13,15 +13,12 @@ import javax.swing.text.*;
 
 public class RandomizerGUI{
    
-   private static int COLUMNS=3;
+   private static int COLUMNS=3;//COLUMNS and ROWS default to 3, should be initialized via first GUI
    private static int ROWS=3;
    private static int ELEMENTS=9;
    private static int ITERATIONS=1;
-   private static JTextField field1;
-   private static JTextField field2;
-   private static JTextField field3;
-   private static JFrame frame2;
-   private static JPanel panel;
+   
+  // private static JPanel panel;
    
    public static int getRows(){
       return ROWS;
@@ -36,23 +33,25 @@ public class RandomizerGUI{
       layout.setHgap(5);
       layout.setVgap(5);
       JFrame frame=new JFrame("Bingo");
-      panel=new JPanel();
+      JPanel panel=new JPanel();
+      panel.setFocusable(true);
       panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
       panel.getInputMap().put(KeyStroke.getKeyStroke("control S"),"Save");
-      panel.getActionMap().put("Save",new SaveAction(i));
+      panel.getActionMap().put("Save",new SaveAction(i,panel));
       
       
       panel.setLayout(layout);
       for(int j=0; j<ELEMENTS; j++){
          JTextPane textPane=new JTextPane();
+         textPane.setFocusable(false);
          StyledDocument doc = textPane.getStyledDocument();
          SimpleAttributeSet center = new SimpleAttributeSet();
          StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
          doc.setParagraphAttributes(0, doc.getLength(), center, false);
-        //double fontSize=Math.max(1600.0/((double)selected[i].length()*(double)COLUMNS),9.0);
          textPane.setFont(new Font("Courier",Font.BOLD,15));
          textPane.setText(selected[j]);
          textPane.setBackground(Color.lightGray);
+         textPane.setEditable(false);
          panel.add(textPane);
       }
       
@@ -61,19 +60,20 @@ public class RandomizerGUI{
       frame.setSize(1000,1000);
       frame.setVisible(true);
       if(ITERATIONS>1){
-          saveImage(i);
+          saveImage(i,panel);
       }
+      panel.requestFocus();
          }
    
    public static void rowColumnGUI(){
-      frame2=new JFrame();
+      JFrame frame2=new JFrame();
       frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       JPanel panel=(JPanel)frame2.getContentPane();
       GridLayout layout=new GridLayout(1,7);
       panel.setLayout(layout);
-      field1=new JTextField("");
-      field2=new JTextField("");
-      field3=new JTextField("");
+      JTextField field1=new JTextField("");
+      JTextField field2=new JTextField("");
+      JTextField field3=new JTextField("");
       JButton button=new JButton("Enter");
       button.addActionListener(new ActionListener()
       {
@@ -112,7 +112,7 @@ public class RandomizerGUI{
 
    }
    
-   public static void saveImage(int num){
+   public static void saveImage(int num,JComponent panel){
       Dimension size = panel.getSize();
       BufferedImage image = new BufferedImage(
                     size.width, size.height 

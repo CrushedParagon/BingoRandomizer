@@ -1,14 +1,18 @@
 import javax.swing.AbstractAction;
 import java.awt.event.*;
+import javax.swing.JPanel;
+import javax.swing.JComponent;
 
 public class SaveAction extends AbstractAction{
    private int num;
-   public SaveAction(int i){
+   private JComponent panel;
+   public SaveAction(int i, JComponent panel){
       num=i;
+      this.panel=panel;
    }
    public void actionPerformed(ActionEvent e){
       
-         RandomizerGUI.saveImage(num);
+         RandomizerGUI.saveImage(num,panel);
       
    }
 }
