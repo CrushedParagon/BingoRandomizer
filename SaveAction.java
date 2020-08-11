@@ -11,7 +11,7 @@ public class SaveAction extends AbstractAction{
       this.panel=panel;
    }
    public void actionPerformed(ActionEvent e){
-      
+      //just calls saveImage
          RandomizerGUI.saveImage(num,panel);
       
    }
