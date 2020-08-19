@@ -25,7 +25,7 @@ public class Randomizer{
    public static void main(String[] args){
       //tries to read in the bingo.txt file
       try{
-      Randomizer.readBingo("bingo.txt");
+      Randomizer.readBingo("./bingo.txt");
       }catch (Exception e){//catches all exceptions and prints out the message for debug purposes
          System.out.println(e);
       }
@@ -40,10 +40,12 @@ public class Randomizer{
       COLUMNS=RandomizerGUI.getColumns();
       ROWS=RandomizerGUI.getRows();
       ELEMENTS=COLUMNS*ROWS;
+      String[][] allSelected=new String[sheets][];
       for(int i=0; i<sheets; i++){
-         String[] selected=selectItems(random);
-         RandomizerGUI.makeGUI(selected,i);
+         allSelected[i]=selectItems(random);
+         
       }
+      RandomizerGUI.makeGUI(allSelected);
    }
    
    //reads in the txt file
